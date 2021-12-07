@@ -15,7 +15,6 @@ use Magento\Store\Model\StoreManagerInterface;
 
 class Data extends AbstractHelper
 {
-
     /** @var CatalogMediaConfig  */
     private $catalogMediaConfig;
 
@@ -94,9 +93,10 @@ class Data extends AbstractHelper
      * Based on https://github.com/imgproxy/imgproxy/blob/master/examples/signature.php
      * @param string $imageUrl
      * @param array $params
+     * @param string $type Added to the final url as a parameter. Could be used to exclude the image from FPC.
      * @return string
      */
-    public function getImgProxyUrl(string $imageUrl, array $params)
+    public function getImgProxyUrl(string $imageUrl, array $params, string $type = 'catalog')
     {
         $resize = $this->customConfig->getImgproxyResize();
         $width = $params['width'];
@@ -137,7 +137,7 @@ class Data extends AbstractHelper
             $path = '/insecure' . $path;
         }
 
-        return rtrim($this->customConfig->getImgproxyHost(), '/') . $path;
+        return rtrim($this->customConfig->getImgproxyHost(), '/') . $path . '?type=' . $type;
     }
 
     private function signImgproxyPath(string $path, string $key, string $salt): string
