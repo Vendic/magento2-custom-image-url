@@ -81,6 +81,25 @@
                     </depends>
                     <comment><![CDATA[Enter a custom URL to proxy.]]></comment>
                 </field>
+                <field id="catalog_media_url_format_custom_imgproxy_default_url_fallback_enabled" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="0">
+                    <label>Imgproxy Default URL Fallback mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="catalog_media_url_format">image_optimization_parameters</field>
+                        <field id="catalog_media_url_format_custom_type">imgproxy</field>
+                        <field id="catalog_media_url_format_custom_imgproxy_source_type" separator=",">url</field>
+                    </depends>
+                    <comment><![CDATA[Enable default URL fallback mode. Checks if the file exists on the local environment first, else it falls back to a the fallback url.]]></comment>
+                </field>
+                <field id="catalog_media_url_format_custom_imgproxy_default_url_fallback_url" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="0">
+                    <label>Imgproxy fallback URL</label>
+                    <depends>
+                        <field id="catalog_media_url_format">image_optimization_parameters</field>
+                        <field id="catalog_media_url_format_custom_type">imgproxy</field>
+                        <field id="catalog_media_url_format_custom_imgproxy_default_url_fallback_enabled" separator=",">1</field>
+                    </depends>
+                    <comment><![CDATA[Enter a fallback url that will be used if we can't find the file locally.]]></comment>
+                </field>
             </group>
         </section>
     </system>

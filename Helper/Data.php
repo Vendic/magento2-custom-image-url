@@ -5,9 +5,11 @@ namespace Fruitcake\CustomImageUrl\Helper;
 use Magento\Catalog\Model\Config\CatalogMediaConfig;
 use Fruitcake\CustomImageUrl\Model\Config\CustomConfig;
 use Magento\Catalog\Model\View\Asset\Image;
+use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Filesystem\Io\File;
 use Magento\Framework\UrlInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
@@ -26,6 +28,8 @@ class Data extends AbstractHelper
     private $storeManager;
 
     public function __construct(
+        private DirectoryList $directoryList,
+        private File $file,
         Context $context,
         CatalogMediaConfig $catalogMediaConfig,
         CustomConfig $customConfig,
@@ -123,6 +127,18 @@ class Data extends AbstractHelper
             $sourceUrl = $proxyUrl . '/' . $path;
         } else {
             $sourceUrl = $imageUrl;
+
+            // If the file doesn't exist, use the fallback URL, but only if fallback mode is enabled.
+            // Which should not be the case for production environments.
+            if ($this->customConfig->isUrlFallbackEnabled() && $this->customConfig->getImgproxyFallbackUrl()) {
+                $pubDir = $this->directoryList->getPath(DirectoryList::PUB);
+                $fileExists = $this->file->fileExists($pubDir . '/' . $path);
+
+                if (!$fileExists) {
+                    $proxyUrl = trim($this->customConfig->getImgproxyFallbackUrl(), '/');
+                    $sourceUrl = $proxyUrl . '/' . $path;
+                }
+            }
         }
 
         $encodedUrl = rtrim(strtr(base64_encode($sourceUrl), '+/', '-_'), '=');
