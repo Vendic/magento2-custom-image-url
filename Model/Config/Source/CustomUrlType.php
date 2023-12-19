@@ -34,7 +34,7 @@ class CustomUrlType implements \Magento\Framework\Data\OptionSourceInterface
             [
                 'value' => CustomConfig::TYPE_IMGPROXY,
                 'label' => __('Imgproxy')
-            ],
+            ]
         ];
     }
 }

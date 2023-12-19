@@ -1,9 +1,4 @@
-<?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Fruitcake\CustomImageUrl\Model\Config;
 
@@ -27,6 +22,9 @@ class CustomConfig
     public const XML_PATH_CATALOG_MEDIA_URL_FORMAT_CUSTOM_IMGPROXY_SOURCE_PREFIX = 'web/url/catalog_media_url_format_custom_imgproxy_source_prefix';
     public const XML_PATH_CATALOG_MEDIA_URL_FORMAT_CUSTOM_IMGPROXY_SOURCE_CUSTOM_URL = 'web/url/catalog_media_url_format_custom_imgproxy_source_custom_url';
 
+    public const XML_PATH_CATALOG_MEDIA_URL_FALLBACK_ENABLED = 'web/url/catalog_media_url_format_custom_imgproxy_default_url_fallback_enabled';
+    public const XML_PATH_CATALOG_MEDIA_URL_FALLBACK_URL = 'web/url/catalog_media_url_format_custom_imgproxy_default_url_fallback_url';
+
     public const TYPE_DEFAULT = 'default';
     public const TYPE_PATTERN = 'pattern';
     public const TYPE_IMGPROXY = 'imgproxy';
@@ -40,17 +38,8 @@ class CustomConfig
     public const IMGPROXY_FILL = 'fill';
     public const IMGPROXY_AUTO = 'auto';
 
-    /**
-     * @var ScopeConfigInterface
-     */
-    private $scopeConfig;
-
-    /**
-     * @param ScopeConfigInterface $scopeConfig
-     */
-    public function __construct(ScopeConfigInterface $scopeConfig)
+    public function __construct(private ScopeConfigInterface $scopeConfig)
     {
-        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -146,4 +135,21 @@ class CustomConfig
         );
     }
 
+    public function isUrlFallbackEnabled($storeId = null): bool
+    {
+        return $this->scopeConfig->isSetFlag(
+            self::XML_PATH_CATALOG_MEDIA_URL_FALLBACK_ENABLED,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    public function getImgproxyFallbackUrl($storeId = null): string
+    {
+        return $this->scopeConfig->getValue(
+            self::XML_PATH_CATALOG_MEDIA_URL_FALLBACK_URL,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
 }
