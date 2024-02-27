@@ -131,8 +131,11 @@ class Data extends AbstractHelper
             // If the file doesn't exist, use the fallback URL, but only if fallback mode is enabled.
             // Which should not be the case for production environments.
             if ($this->customConfig->isUrlFallbackEnabled() && $this->customConfig->getImgproxyFallbackUrl()) {
+                $pattern = '/(\/version\d+\/)/';
+                $replacement = '/';
+                $strippedPath = preg_replace($pattern, $replacement, $path);
                 $pubDir = $this->directoryList->getPath(DirectoryList::PUB);
-                $fileExists = $this->file->fileExists($pubDir . '/' . $path);
+                $fileExists = $this->file->fileExists($pubDir . '/' . $strippedPath);
 
                 if (!$fileExists) {
                     $proxyUrl = trim($this->customConfig->getImgproxyFallbackUrl(), '/');
