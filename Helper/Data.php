@@ -103,8 +103,8 @@ class Data extends AbstractHelper
     public function getImgProxyUrl(string $imageUrl, array $params)
     {
         $resize = $this->customConfig->getImgproxyResize();
-        $width = $params['width'];
-        $height = $params['height'];
+        $width = $params['width'] ?? 0;
+        $height = $params['height'] ?? 0;
 
         $urlParts = parse_url($imageUrl);
         $path = ltrim($urlParts['path'], '/');
