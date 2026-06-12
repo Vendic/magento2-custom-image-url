@@ -81,6 +81,15 @@
                     </depends>
                     <comment><![CDATA[Enter a custom URL to proxy.]]></comment>
                 </field>
+                <field id="catalog_media_url_format_custom_imgproxy_include_filename" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="0">
+                    <label>Append SEO Filename at the end to Image URLs</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="catalog_media_url_format">image_optimization_parameters</field>
+                        <field id="catalog_media_url_format_custom_type">imgproxy</field>
+                    </depends>
+                    <comment><![CDATA[Appends the original filename to imgproxy URLs, e.g. <code>.../{encoded}.jpg/defaul-image.jpg</code>. Requires <strong>IMGPROXY_BASE64_URL_INCLUDES_FILENAME=true</strong> config on the imgproxy server, otherwise images will break.]]></comment>
+                </field>
                 <field id="catalog_media_url_format_custom_imgproxy_default_url_fallback_enabled" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="0">
                     <label>Imgproxy Default URL Fallback mode</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
