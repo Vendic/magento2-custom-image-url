@@ -147,6 +147,14 @@ class Data extends AbstractHelper
         $encodedUrl = rtrim(strtr(base64_encode($sourceUrl), '+/', '-_'), '=');
         $path = "/resize:{$resize}:$width:$height/{$encodedUrl}.{$extension}";
 
+        // Append the original filename as an extra path segment for SEO.
+        if ($this->customConfig->isImgproxyIncludeFilenameEnabled()) {
+            $basename = trim(pathinfo($urlParts['path'], PATHINFO_BASENAME));
+            if ($basename) {
+                $path .= '/' . rawurlencode($basename);
+            }
+        }
+
         // Sign the URL
         $key = $this->customConfig->getImgproxyKey();
         $salt = $this->customConfig->getImgproxySalt();

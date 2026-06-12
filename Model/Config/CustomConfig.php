@@ -22,6 +22,8 @@ class CustomConfig
     public const XML_PATH_CATALOG_MEDIA_URL_FORMAT_CUSTOM_IMGPROXY_SOURCE_PREFIX = 'web/url/catalog_media_url_format_custom_imgproxy_source_prefix';
     public const XML_PATH_CATALOG_MEDIA_URL_FORMAT_CUSTOM_IMGPROXY_SOURCE_CUSTOM_URL = 'web/url/catalog_media_url_format_custom_imgproxy_source_custom_url';
 
+    public const XML_PATH_CATALOG_MEDIA_URL_FORMAT_CUSTOM_IMGPROXY_INCLUDE_FILENAME = 'web/url/catalog_media_url_format_custom_imgproxy_include_filename';
+
     public const XML_PATH_CATALOG_MEDIA_URL_FALLBACK_ENABLED = 'web/url/catalog_media_url_format_custom_imgproxy_default_url_fallback_enabled';
     public const XML_PATH_CATALOG_MEDIA_URL_FALLBACK_URL = 'web/url/catalog_media_url_format_custom_imgproxy_default_url_fallback_url';
 
@@ -130,6 +132,15 @@ class CustomConfig
     {
         return $this->scopeConfig->getValue(
             self::XML_PATH_CATALOG_MEDIA_URL_FORMAT_CUSTOM_PATTERN,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    public function isImgproxyIncludeFilenameEnabled($storeId = null): bool
+    {
+        return $this->scopeConfig->isSetFlag(
+            self::XML_PATH_CATALOG_MEDIA_URL_FORMAT_CUSTOM_IMGPROXY_INCLUDE_FILENAME,
             ScopeInterface::SCOPE_STORE,
             $storeId
         );
