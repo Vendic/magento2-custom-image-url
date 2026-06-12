@@ -147,12 +147,10 @@ class Data extends AbstractHelper
         $encodedUrl = rtrim(strtr(base64_encode($sourceUrl), '+/', '-_'), '=');
         $path = "/resize:{$resize}:$width:$height/{$encodedUrl}.{$extension}";
 
-        // Append the original filename as an extra path segment for SEO. Requires imgproxy 3.28+
-        // with IMGPROXY_BASE64_URL_INCLUDES_FILENAME=true, which discards this segment when
-        // decoding the source URL.
+        // Append the original filename as an extra path segment for SEO.
         if ($this->customConfig->isImgproxyIncludeFilenameEnabled()) {
-            $basename = pathinfo($urlParts['path'], PATHINFO_BASENAME);
-            if ($basename !== '') {
+            $basename = trim(pathinfo($urlParts['path'], PATHINFO_BASENAME));
+            if ($basename) {
                 $path .= '/' . rawurlencode($basename);
             }
         }
