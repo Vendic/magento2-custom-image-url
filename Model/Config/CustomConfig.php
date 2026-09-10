@@ -71,7 +71,7 @@ class CustomConfig
             self::XML_PATH_CATALOG_MEDIA_URL_FORMAT_CUSTOM_IMGPROXY_HOST,
             ScopeInterface::SCOPE_STORE,
             $storeId
-        );
+        ) ?: '';
     }
 
     public function getImgproxyResize($storeId = null): string
@@ -89,7 +89,7 @@ class CustomConfig
             self::XML_PATH_CATALOG_MEDIA_URL_FORMAT_CUSTOM_IMGPROXY_SOURCE_TYPE,
             ScopeInterface::SCOPE_STORE,
             $storeId
-        );
+        ) ?: self::IMGPROXY_URL;
     }
 
     public function getImgproxySourcePrefix($storeId = null): string
@@ -134,7 +134,7 @@ class CustomConfig
             self::XML_PATH_CATALOG_MEDIA_URL_FORMAT_CUSTOM_PATTERN,
             ScopeInterface::SCOPE_STORE,
             $storeId
-        );
+        ) ?: '';
     }
 
     public function isImgproxyIncludeFilenameEnabled($storeId = null): bool
@@ -161,6 +161,6 @@ class CustomConfig
             self::XML_PATH_CATALOG_MEDIA_URL_FALLBACK_URL,
             ScopeInterface::SCOPE_STORE,
             $storeId
-        );
+        ) ?: '';
     }
 }
